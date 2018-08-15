@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"strings"
 )
 
@@ -107,4 +108,30 @@ func (rn *radixNode) Print(indent int) {
 	for _, child := range rn.children {
 		child.Print(indent + 2)
 	}
+}
+
+func (rn *radixNode) Write(w io.Writer) error {
+	_, err := fmt.Fprintf(w, "\"%v\": {t:%v,c:{", rn.key, rn.isTerm)
+
+	if err != nil {
+		return err
+	}
+
+	for index, child := range rn.children {
+		err = child.Write(w)
+
+		if err != nil {
+			return err
+		}
+
+		if len(rn.children)-1 > index {
+			_, err = fmt.Fprint(w, ",")
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	_, err = fmt.Fprint(w, "}}")
+	return err
 }

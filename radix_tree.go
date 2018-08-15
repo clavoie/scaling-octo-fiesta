@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"strings"
 )
 
@@ -33,4 +35,28 @@ func (rt *radixTree) Print() {
 	for _, root := range rt.roots {
 		root.Print(0)
 	}
+}
+
+func (rt *radixTree) Write(w io.Writer) error {
+	_, err := fmt.Fprint(w, "{")
+	if err != nil {
+		return err
+	}
+
+	for index, root := range rt.roots {
+		err = root.Write(w)
+		if err != nil {
+			return err
+		}
+
+		if len(rt.roots)-1 > index {
+			_, err = fmt.Fprint(w, ",")
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	_, err = fmt.Fprintf(w, "}")
+	return err
 }

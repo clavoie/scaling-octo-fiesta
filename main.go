@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 )
@@ -40,5 +39,9 @@ func main() {
 	}
 
 	radixTree.Print()
-	fmt.Println("vim-go", args[0])
+	err = radixTree.Write(os.Stdout)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
