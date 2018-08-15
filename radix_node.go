@@ -111,7 +111,7 @@ func (rn *radixNode) Print(indent int) {
 }
 
 func (rn *radixNode) Write(w io.Writer) error {
-	_, err := fmt.Fprintf(w, "\"%v\": {t:%v,c:{", rn.key, rn.isTerm)
+	_, err := fmt.Fprintf(w, "\"%v\": {", rn.key)
 
 	if err != nil {
 		return err
@@ -132,6 +132,6 @@ func (rn *radixNode) Write(w io.Writer) error {
 		}
 	}
 
-	_, err = fmt.Fprint(w, "}}")
+	_, err = fmt.Fprint(w, "}")
 	return err
 }

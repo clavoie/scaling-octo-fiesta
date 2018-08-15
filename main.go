@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"strings"
 )
 
 func printHelpAndExit() {
@@ -18,7 +19,13 @@ func main() {
 		printHelpAndExit()
 	}
 
-	fname := args[0]
+	fname := strings.TrimSpace(args[0])
+	oname := strings.TrimSpace(args[1])
+
+	if fname == "" || oname == "" {
+		printHelpAndExit()
+	}
+
 	inputFile, err := os.Open(fname)
 
 	if err != nil {
@@ -38,8 +45,15 @@ func main() {
 		radixTree.Add(scanner.Text())
 	}
 
-	radixTree.Print()
-	err = radixTree.Write(os.Stdout)
+	// radixTree.Print()
+	// err = radixTree.Write(os.Stdout)
+	outFile, err := os.Create(oname)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = radixTree.Write(outFile)
 
 	if err != nil {
 		log.Fatal(err)
