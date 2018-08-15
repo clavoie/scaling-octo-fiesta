@@ -37,8 +37,8 @@ func main() {
 	radixTree := newRadixTree()
 	for scanner.Scan() {
 		radixTree.Add(scanner.Text())
-		fmt.Println(scanner.Text())
 	}
 
+	radixTree.Print()
 	fmt.Println("vim-go", args[0])
 }
