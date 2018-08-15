@@ -11,5 +11,11 @@ func newRadixTree() *radixTree {
 }
 
 func (rt *radixTree) Add(value string) {
+	for _, root := range rt.roots {
+		if root.Add(value) {
+			return
+		}
 
+		rt.roots = append(rt.roots, newRaidxNode(value))
+	}
 }

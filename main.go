@@ -34,7 +34,9 @@ func main() {
 	}()
 
 	scanner := bufio.NewScanner(inputFile)
+	radixTree := newRadixTree()
 	for scanner.Scan() {
+		radixTree.Add(scanner.Text())
 		fmt.Println(scanner.Text())
 	}
 

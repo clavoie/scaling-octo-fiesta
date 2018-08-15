@@ -7,6 +7,13 @@ type radixNode struct {
 	children []*radixNode
 }
 
+func newRadixNode(value string) *radixNode {
+	return &radixNode{
+		key:      value,
+		children: make([]*radixNode, 0),
+	}
+}
+
 func (rn *radixNode) Add(value string) bool {
 	if value == "" {
 		return false
